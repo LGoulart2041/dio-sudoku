@@ -14,7 +14,7 @@ public class Board {
         this.cells = cells;
     }
 
-    public List<List<Cell>> getSpaces() {
+    public List<List<Cell>> getCells() {
         return cells;
     }
 

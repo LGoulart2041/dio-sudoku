@@ -21,7 +21,7 @@ public class Main {
 
     private static Board board;
 
-    private final static int BOARD_LIMIT = 9;
+    public final static int BOARD_LIMIT = 9;
 
     public static void main(String[] args) {
 
@@ -126,7 +126,7 @@ public class Main {
         var args = new Object[81];
         var argPos = 0;
         for(int i = 0; i < BOARD_LIMIT; i++) {
-            for(var col : board.getSpaces()) {
+            for(var col : board.getCells()) {
                 args[argPos++] = " " + ((isNull(col.get(i).getActual())) ? " " : col.get(i).getActual());
             }
         }
