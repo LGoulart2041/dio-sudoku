@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BoardService {
+public class BoardService implements IBoardService{
 
     public final static int BOARD_LIMIT = 9;
 
@@ -22,22 +22,9 @@ public class BoardService {
         return board.getCells();
     }
 
-    public void reset() {
-        board.reset();
-    }
-
     public boolean hasErrors() {
         return board.hasErrors();
     }
-
-    public GameStatusEnum getStatus() {
-        return board.getStatus();
-    }
-
-    public boolean gameIsFinished() {
-        return board.gameIsFinished();
-    }
-
 
     private List<List<Cell>> initBoard(final Map<String, String> gameConfig) {
         List<List<Cell>> cells = new ArrayList<>();
@@ -53,5 +40,20 @@ public class BoardService {
         }
 
         return cells;
+    }
+
+    @Override
+    public void resetGame() {
+        board.resetGame();
+    }
+
+    @Override
+    public GameStatusEnum checkGameStatus() {
+        return board.checkGameStatus();
+    }
+
+    @Override
+    public void finishGame() {
+        board.finishGame();
     }
 }

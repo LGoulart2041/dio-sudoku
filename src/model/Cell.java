@@ -1,6 +1,6 @@
 package model;
 
-public class Cell {
+public class Cell implements ICell{
 
     private Integer actual;
     private final int expected;

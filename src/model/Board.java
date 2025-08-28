@@ -18,7 +18,7 @@ public class Board {
         return cells;
     }
 
-    public GameStatusEnum getStatus() {
+    public GameStatusEnum checkGameStatus() {
         if(cells.stream().flatMap(Collection::stream).noneMatch(s -> !s.isFixed() && nonNull(s.getActual()))){
             return GameStatusEnum.NON_STARTED;
         }
@@ -27,7 +27,7 @@ public class Board {
     }
 
     public boolean hasErrors() {
-        if(getStatus() == GameStatusEnum.NON_STARTED){
+        if(checkGameStatus() == GameStatusEnum.NON_STARTED){
             return false;
         }
 
@@ -55,11 +55,11 @@ public class Board {
         return true;
     }
 
-    public void reset() {
+    public void resetGame() {
         cells.forEach(c -> c.forEach(Cell::clearCell));
     }
 
-    public boolean gameIsFinished() {
-        return !hasErrors() && getStatus() == GameStatusEnum.COMPLETE;
+    public boolean finishGame() {
+        return !hasErrors() && checkGameStatus() == GameStatusEnum.COMPLETE;
     }
 }

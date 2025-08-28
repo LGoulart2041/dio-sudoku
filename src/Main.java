@@ -1,6 +1,5 @@
 import model.Board;
 import model.Cell;
-import util.BoardTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +140,7 @@ public class Main {
             return;
         }
 
-        System.out.printf("O jogo atualmente se encontra no status %s\n", board.getStatus().getLabel());
+        System.out.printf("O jogo atualmente se encontra no status %s\n", board.checkGameStatus().getLabel());
 
         if(board.hasErrors()) {
             System.out.println("O jogo contém erros");
@@ -163,7 +162,7 @@ public class Main {
             confirm = scanner.next();
         }
 
-        if(confirm.equalsIgnoreCase("sim")) board.reset();
+        if(confirm.equalsIgnoreCase("sim")) board.resetGame();
     }
 
     private static void finishGame() {
@@ -172,7 +171,7 @@ public class Main {
             return;
         }
 
-        if(board.gameIsFinished()) {
+        if(board.finishGame()) {
             System.out.println("Parabéns você concluiu o jogo");
             showCurrentGame();
             board = null;

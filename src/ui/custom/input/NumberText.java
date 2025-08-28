@@ -1,6 +1,7 @@
 package ui.custom.input;
 
 import model.Cell;
+import model.ICell;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -11,10 +12,13 @@ import static java.awt.Font.PLAIN;
 
 public class NumberText extends JTextField {
 
-    private final Cell cell;
+    private final ICell cell;
+    private final InputValidator validator;
 
-    public NumberText(final Cell cell) {
+    public NumberText(final ICell cell, final InputValidator validator) {
         this.cell = cell;
+        this.validator = validator;
+
         var dimension = new Dimension(50, 50);
         this.setSize(dimension);
         this.setPreferredSize(dimension);
@@ -23,6 +27,7 @@ public class NumberText extends JTextField {
         this.setHorizontalAlignment(CENTER);
         this.setDocument(new NumberTextLimit());
         this.setEnabled(!cell.isFixed());
+
         if(cell.isFixed()) {
             this.setText(cell.getActual().toString());
         }
@@ -44,11 +49,16 @@ public class NumberText extends JTextField {
             }
 
             private void changeCell() {
-                if(getText().isEmpty()) {
-                    cell.clearCell();
+                String text = getText();
+                if(!validator.isValid(text)) {
+                    setText("");
                     return;
                 }
-                cell.setActual(Integer.parseInt(getText()));
+                if(text.isEmpty()){
+                    cell.clearCell();
+                } else {
+                    cell.setActual(Integer.parseInt(text));
+                }
             }
         });
     }

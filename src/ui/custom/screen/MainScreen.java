@@ -2,6 +2,7 @@ package ui.custom.screen;
 
 import com.sun.tools.javac.Main;
 import service.BoardService;
+import ui.custom.frame.MainFrame;
 import ui.custom.panel.MainPanel;
 
 import javax.swing.*;
@@ -24,10 +25,11 @@ public class MainScreen {
 
     public void buildMainScreen(){
         JPanel mainPanel = new MainPanel(dimension);
-        JFrame mainFrame = new Main(dimension, mainPanel);
+        JFrame mainFrame = new MainFrame(dimension, mainPanel);
         addResetButton(mainPanel);
         addShowGameStatusButton(mainPanel);
         addFinishGameButton(mainPanel);
+
         mainFrame.revalidate();
         mainFrame.repaint();
     }
