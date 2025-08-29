@@ -3,6 +3,7 @@ package service;
 import model.Board;
 import model.Cell;
 import model.GameStatusEnum;
+import model.ICell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class BoardService implements IBoardService{
         this.board = new Board(initBoard(gameConfig));
     }
 
-    public List<List<Cell>> getCells() {
+    public List<List<ICell>> getCells() {
         return board.getCells();
     }
 
@@ -26,8 +27,8 @@ public class BoardService implements IBoardService{
         return board.hasErrors();
     }
 
-    private List<List<Cell>> initBoard(final Map<String, String> gameConfig) {
-        List<List<Cell>> cells = new ArrayList<>();
+    private List<List<ICell>> initBoard(final Map<String, String> gameConfig) {
+        List<List<ICell>> cells = new ArrayList<>();
         for(int i = 0; i < BOARD_LIMIT; i++) {
             cells.add(new ArrayList<>());
             for(int j = 0; j < BOARD_LIMIT; j++) {
@@ -53,7 +54,7 @@ public class BoardService implements IBoardService{
     }
 
     @Override
-    public void finishGame() {
-        board.finishGame();
+    public boolean gameIsFinish() {
+        return board.finishGame();
     }
 }

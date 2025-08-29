@@ -8,13 +8,13 @@ import static java.util.Objects.nonNull;
 
 public class Board {
 
-    private final List<List<Cell>> cells;
+    private final List<List<ICell>> cells;
 
-    public Board(List<List<Cell>> cells) {
+    public Board(List<List<ICell>> cells) {
         this.cells = cells;
     }
 
-    public List<List<Cell>> getCells() {
+    public List<List<ICell>> getCells() {
         return cells;
     }
 
@@ -56,7 +56,7 @@ public class Board {
     }
 
     public void resetGame() {
-        cells.forEach(c -> c.forEach(Cell::clearCell));
+        cells.forEach(c -> c.forEach(ICell::clearCell));
     }
 
     public boolean finishGame() {

@@ -5,4 +5,5 @@ public interface ICell {
     void clearCell();
     void setActual(final Integer value);
     Integer getActual();
+    int getExpected();
 }

@@ -13,9 +13,9 @@ import static java.awt.Font.PLAIN;
 public class NumberText extends JTextField {
 
     private final ICell cell;
-    private final InputValidator validator;
+    private final SudokuInputValidator validator;
 
-    public NumberText(final ICell cell, final InputValidator validator) {
+    public NumberText(final ICell cell, final SudokuInputValidator validator) {
         this.cell = cell;
         this.validator = validator;
 

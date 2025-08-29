@@ -1,5 +1,6 @@
 import model.Board;
 import model.Cell;
+import model.ICell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class Main {
             return;
         }
 
-        List<List<Cell>> cells = new ArrayList<>();
+        List<List<ICell>> cells = new ArrayList<>();
         for(int i = 0; i < BOARD_LIMIT; i++) {
             cells.add(new ArrayList<>());
             for(int j = 0; j < BOARD_LIMIT; j++) {
