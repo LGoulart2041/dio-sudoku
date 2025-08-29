@@ -4,6 +4,8 @@ import com.sun.tools.javac.Main;
 import model.Cell;
 import model.ICell;
 import service.BoardService;
+import service.EventEnum;
+import service.NotifierService;
 import ui.custom.button.CheckGameStatusButton;
 import ui.custom.button.FinishGameButton;
 import ui.custom.button.ResetButton;
@@ -20,14 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
-import static javax.swing.JOptionPane.YES_NO_OPTION;
+import static javax.swing.JOptionPane.*;
+import static service.EventEnum.CLEAR_SPACE;
 
 public class MainScreen {
 
     private final static Dimension dimension = new Dimension(600, 600);
 
     private final BoardService boardService;
+    private final NotifierService notifierService;
 
     private JButton addShowGameStatusButton;
     private JButton resetGameButton;
@@ -38,6 +41,7 @@ public class MainScreen {
 
     public MainScreen(final Map<String, String> gameConfig) {
         this.boardService = new BoardService(gameConfig);
+        this.notifierService = new NotifierService();
         this.validator = new SudokuInputValidator();
     }
 
@@ -79,19 +83,20 @@ public class MainScreen {
         List<NumberText> fields = cells.stream()
                 .map(cell -> new NumberText(cell, validator))
                 .toList();
+        fields.forEach(t -> notifierService.subscriber(CLEAR_SPACE, t));
         return new SudokuSector(fields);
     }
 
     private void addFinishGameButton(JPanel mainPanel) {
         finishGameButton = new FinishGameButton(e -> {
             if(boardService.gameIsFinish()) {
-                JOptionPane.showMessageDialog(null, "Parabéns, você concluiu o jogo");
+                showMessageDialog(null, "Parabéns, você concluiu o jogo");
                 resetGameButton.setEnabled(false);
                 checkGameStatusButton.setEnabled(false);
                 finishGameButton.setEnabled(false);
             } else {
                 var message = "Seu jogo tem alguma inconsistência. Ajuste e tente novamente";
-                JOptionPane.showMessageDialog(null, message);
+                showMessageDialog(null, message);
             }
         });
         mainPanel.add(finishGameButton);
@@ -107,7 +112,7 @@ public class MainScreen {
                 case COMPLETE -> "O jogo está completo";
             };
             message += hasErrors ? " e contém erros" : " e não contém erros";
-            JOptionPane.showMessageDialog(null, message);
+            showMessageDialog(null, message);
         });
         mainPanel.add(checkGameStatusButton);
     }
@@ -123,6 +128,7 @@ public class MainScreen {
             );
             if(dialogResult == 0) {
                 boardService.resetGame();
+                notifierService.notify(CLEAR_SPACE);
             }
         });
         mainPanel.add(resetGameButton);

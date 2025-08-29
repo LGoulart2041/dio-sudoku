@@ -2,6 +2,8 @@ package ui.custom.input;
 
 import model.Cell;
 import model.ICell;
+import service.EventEnum;
+import service.EventListener;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -9,8 +11,9 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 import static java.awt.Font.PLAIN;
+import static service.EventEnum.CLEAR_SPACE;
 
-public class NumberText extends JTextField {
+public class NumberText extends JTextField implements EventListener {
 
     private final ICell cell;
     private final SudokuInputValidator validator;
@@ -63,4 +66,12 @@ public class NumberText extends JTextField {
         });
     }
 
+    @Override
+    public void update(EventEnum eventType) {
+        if (eventType.equals(CLEAR_SPACE) && this.isEnabled()) {
+            this.setText("");
+        } else if (eventType.equals(CLEAR_SPACE) && cell.isFixed()) {
+            this.setText(cell.getActual().toString());
+        }
+    }
 }
